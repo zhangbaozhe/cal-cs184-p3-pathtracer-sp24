@@ -195,9 +195,15 @@ Ray Camera::generate_ray(double x, double y) const {
   // Note: hFov and vFov are in degrees.
   //
 
+  // map (x, y) to the sensor plane
+  double x_sensor = 2 * tan(radians(hFov) / 2) * (x - 0.5);
+  double y_sensor = 2 * tan(radians(vFov) / 2) * (y - 0.5);
 
-  return Ray(pos, Vector3D(0, 0, -1));
-
+  Vector3D dir_world = c2w * Vector3D(x_sensor, y_sensor, -1).unit();
+  Ray ray(pos, dir_world);
+  ray.min_t = nClip;
+  ray.max_t = fClip;
+  return ray;
 }
 
 } // namespace CGL

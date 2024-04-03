@@ -28,9 +28,7 @@ bool Triangle::has_intersection(const Ray &r) const {
   // function records the "intersection" while this function only tests whether
   // there is a intersection.
 
-
-  return true;
-
+  return intersect(r, nullptr);
 }
 
 bool Triangle::intersect(const Ray &r, Intersection *isect) const {
@@ -38,10 +36,48 @@ bool Triangle::intersect(const Ray &r, Intersection *isect) const {
   // implement ray-triangle intersection. When an intersection takes
   // place, the Intersection data should be updated accordingly
 
+  // ref: https://en.wikipedia.org/wiki/M%C3%B6ller%E2%80%93Trumbore_intersection_algorithm
+  constexpr double epsilon = std::numeric_limits<double>::epsilon();
 
+  Vector3D e1 = p2 - p1;
+  Vector3D e2 = p3 - p1;
+
+  Vector3D s1 = cross(r.d, e2);
+  double divisor = dot(s1, e1);
+
+  // Parallel to the plane or not
+  if (divisor > -epsilon && divisor < epsilon)
+    return false;
+
+  double invDivisor = 1.0 / divisor;
+
+  Vector3D s = r.o - p1;
+  double u = dot(s, s1) * invDivisor;
+
+  if (u < 0 || u > 1)
+    return false;
+
+  Vector3D s2 = cross(s, e1);
+  double v = dot(r.d, s2) * invDivisor;
+
+  if (v < 0 || u + v > 1)
+    return false;
+
+  double t = dot(e2, s2) * invDivisor;
+
+  if (t < r.min_t || t > r.max_t)
+    return false;
+
+  if (isect == nullptr) {
+    return true;
+  }
+  
+  r.max_t = t;
+  isect->t = t;
+  isect->n = (1 - u - v) * n1 + u * n2 + v * n3;
+  isect->primitive = this;
+  isect->bsdf = get_bsdf();
   return true;
-
-
 }
 
 void Triangle::draw(const Color &c, float alpha) const {

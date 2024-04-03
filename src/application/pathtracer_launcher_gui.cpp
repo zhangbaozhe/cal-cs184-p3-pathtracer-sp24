@@ -374,9 +374,9 @@ int PathtracerLauncherGUI::draw(GUISettings &a_settings) {
 
   // Set up fonts
 #if WIN32
-  const char* font_path = "../../../src/imgui/misc/fonts/DroidSans.ttf";
+  const char* font_path = FONT_PATH;
 #else
-  const char* font_path = "../src/imgui/misc/fonts/DroidSans.ttf";
+  const char* font_path = FONT_PATH;
 #endif
   ImFont* font = io.Fonts->AddFontFromFileTTF(font_path, 18);
   if (font && font->IsLoaded()) {

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(Assignment3)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 #-------------------------------------------------------------------------------
 # Build options
@@ -14,6 +14,8 @@ set(BUILD_DEBUG ${BUILD_DEBUG} CACHE BOOL "Build debug" FORCE)
 if (BUILD_DEBUG)
   set(CMAKE_BUILD_TYPE Debug)
 endif()
+
+add_definitions(-DFONT_PATH="${CMAKE_CURRENT_SOURCE_DIR}/src/imgui/misc/fonts/DroidSans.ttf")
 
 #-------------------------------------------------------------------------------
 # Set target
