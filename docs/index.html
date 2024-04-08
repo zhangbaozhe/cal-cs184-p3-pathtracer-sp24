@@ -55,7 +55,7 @@
     <li>Part 2: Bounding Volume Hierarchy</li>
     <li>Part 3: Direct Illumination</li>
     <li>Part 4: Global Illumination</li>
-    <li>Part 5: </li>
+    <li>Part 5: Adaptive Sampling</li>
   </ul>
   
 </p>
@@ -429,7 +429,7 @@
 
 <div align="middle">
   <table style="width:100%">
-    <tr align="center">
+    <tr align="center">build/bunny_rate.png build/bunny.png build/spheres_rate.png build/spheres.png
       <td>
         <img src="images/part4_CBbunny_s1_l4_o1_m1_final.png" align="middle" width="200px"/>
         <figcaption>CBbunny (s=1, l=4, m=1)</figcaption>
@@ -558,6 +558,40 @@
   </table>
 </div>
 
+<h2 align="middle">Part V: Adaptive Sampling</h2>
+
+<p>
+  In this part, the adaptive sampling technique is implemented to accelerate
+  the rendering process. Basically, for a pixel, the adaptive sampling tries 
+  to sample some rays until the variance of the pixel's illumination is below a certain threshold, where the number of total sample number per pixel is lower than the max number and hence accelerate the rendering.
+
+  Below are pictures showing the rendering results using adaptive sampling.
+</p>
+
+<div align="middle">
+  <table style="width:100%">
+    <tr align="center">
+      <td>
+        <img src="images/bunny.png" align="middle" width="400px"/>
+        <figcaption>Bunny</figcaption>
+      </td>
+      <td>
+        <img src="images/bunny_rate.png" align="middle" width="400px"/>
+        <figcaption>Bunny's sample rate</figcaption>
+      </td>
+    </tr>
+    <tr align="center">
+      <td>
+        <img src="images/spheres.png" align="middle" width="400px"/>
+        <figcaption>Spheres</figcaption>
+      </td>
+      <td>
+        <img src="images/spheres_rate.png" align="middle" width="400px"/>
+        <figcaption>Spheres' sample rate</figcaption>
+      </td>
+    </tr>
+  </table>
+</div>
 
 <script>
   renderMathInElement(
